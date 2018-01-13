@@ -1,0 +1,32 @@
+\scriptsize
+\tikzstyle{commit} = [circle, fill=Orange, draw=white, minimum size=4mm]
+
+\begin{tikzpicture}[>={Latex[round]}]
+  \graph [nodes={commit}, grow right=20mm, branch down=20mm] {
+    beef00[label=beef00, as={}] ->
+    {
+      beef01[label=beef01, as={}] ->
+      beef02[label=beef02, as={}],
+      beef03[label=below:beef03, as={}] ->
+      beef04[label=below:beef04, as={}],
+    } ->
+    beef05[label=beef05, as={}] ->
+    {
+      beef06[label=beef06, as={}] ->
+      {
+        beef07[label=beef07, as={}] ->
+        beef11[label=beef11, as={}],
+        beef08[label=below:beef08, as={}] ->
+        beef09[label=below:beef09, as={}],
+        beef10[label=below:beef10, as={}]
+      }
+    }
+  };
+
+  \small
+  \node [below=4mm of beef04, text=myyellow] {feature1};
+  \node [below=3mm of beef09, text=myyellow] {feature2};
+  \node [below=3mm of beef10, text=myyellow] {feature3};
+  \node [below=1mm of beef11, text=SkyBlue] {master};
+  \node [below=5mm of beef11, text=YellowGreen] {\texttt{HEAD}};
+\end{tikzpicture}

@@ -1,0 +1,34 @@
+\tikzstyle{every node} = [align=center, minimum width=17mm]
+\tikzstyle{workspace} = [fill=Bittersweet, draw=Bittersweet]
+\tikzstyle{index} = [fill=PineGreen, draw=PineGreen]
+\tikzstyle{local} = [fill=Periwinkle, draw=Periwinkle]
+\tikzstyle{remote} = [fill=MidnightBlue, draw=MidnightBlue]
+\tikzstyle{stash} = [fill=Brown, draw=Brown]
+\tikzstyle{arrow} = [->, >=Triangle Cap, line width=4mm, rounded corners]
+
+\begin{tikzpicture}[node distance=13mm]
+  \node (workspace) [circle, blur shadow, workspace] {workspace};
+  \node (index) [visible on=<2->, circle, blur shadow, index, right=of workspace] {index/\\ staging\\ area};
+  \node (local) [visible on=<3->, circle, blur shadow, local, right=of index] {local\\ repo};
+  \node (remote) [visible on=<4->, circle, blur shadow, remote, right=of local] {remote\\ repo};
+  \node (stash) [visible on=<5->, circle, blur shadow, stash, left=of workspace] {stash};
+
+
+  \draw [visible on=<2->, workspace, arrow] ([yshift=4mm]workspace.north) to node {\texttt{git add/rm/mv}} ([yshift=4mm]index.north);
+  \draw [visible on=<3->, index, arrow] ([yshift=4mm]index.north) to node {\texttt{git commit}} ([yshift=4mm]local.north);
+
+  % Remote
+  \draw [visible on=<4->, local, arrow] ([yshift=4mm]local.north) to node {\texttt{git push}} ([yshift=4mm]remote.north);
+  \draw [visible on=<4->, remote, arrow] ([yshift=-4mm]remote.south) to node {\texttt{git fetch}} ([yshift=-4mm]local.south);
+  \draw [visible on=<4->, remote, arrow] ([yshift=-16mm]remote.south) to node {\texttt{git pull}} ([yshift=-16mm]workspace.south);
+
+  % Stash
+  \draw [visible on=<5->, stash, arrow] ([yshift=4mm]stash.north) to node {\texttt{git stash pop/apply}} ([yshift=4mm]workspace.north);
+  \draw [visible on=<5->, workspace, arrow] ([yshift=-4mm]workspace.south) to node {\texttt{git stash}} ([yshift=-4mm]stash.south);
+
+  % Undo
+  \draw [visible on=<2->, index, arrow] ([yshift=-4mm]index.south) to node {\texttt{git checkout}} ([yshift=-4mm]workspace.south);
+  \draw [visible on=<3->, local, arrow] ([yshift=-4mm]local.south) to node {\texttt{git reset --soft}} ([yshift=-4mm]index.south);
+  \draw [visible on=<3->, local, arrow] ([yshift=-10mm]local.south) to node {\texttt{git checkout HEAD}} ([yshift=-10mm]workspace.south);
+
+\end{tikzpicture}

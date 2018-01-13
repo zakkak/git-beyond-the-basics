@@ -31,6 +31,8 @@ x11names]{beamer}
 
 \newcommand{\src}[1]{\scriptsize Figure Source: \textit{#1}}
 
+\defbeamertemplate{description item}{align left}{\insertdescriptionitem\hfill}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Beamer template
 \usetheme[
@@ -65,7 +67,7 @@ x11names]{beamer}
 \setbeamercolor{block body alerted}{bg=normal text.bg!90!black}
 \setbeamercolor{block body}{bg=normal text.bg!90!black}
 \setbeamercolor{block body example}{bg=normal text.bg!90!black}
-\setbeamercolor{block title alerted}{fg=myyellow}
+\setbeamercolor{block title alerted}{fg=black}
 \setbeamercolor{block title}{bg=blue}
 \setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
 \setbeamercolor{frametitle}{fg=white}
@@ -403,7 +405,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 \usepackage{xcolor}
 \usepackage{array}
 \usepackage{tikz}
-\usetikzlibrary{decorations,arrows,shapes,fit,backgrounds,trees}
+\usetikzlibrary{arrows,arrows.meta,shapes,decorations.pathmorphing,calc,shadows,shadows.blur,shapes.multipart,positioning,fit,backgrounds,trees,graphs}
 \tikzset{
     %Define standard arrow tip
     >=stealth',
@@ -421,13 +423,14 @@ SmallCapsFeatures={Letters=SmallCaps},
       \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
     },
   }
+
 \usepackage{amsmath}
 \usepackage{textpos}
 % \usepackage{subfigure}
 
 \graphicspath{{figures/}}
 % \newcommand{\longname}{\emph{Source-Level Compiler Optimizations for Task-Parallelism}}
-\newcommand{\code}[1]{\colorbox{black}{\textcolor{green}{\texttt{#1}}}}
+\newcommand{\code}[1]{{\small\colorbox{black}{\textcolor{green}{\texttt{#1}}}}}
 
 \usepackage{bbding} % for the Checkmark and XSolidBrush
 \newcommand{\tik}[0]{{\color{green}\Checkmark}} % Check-mark
@@ -484,8 +487,6 @@ SmallCapsFeatures={Letters=SmallCaps},
 % }
 \setcounter{tocdepth}{1}
 
-\usetikzlibrary{arrows,arrows.meta,shapes,decorations.pathmorphing,calc,shadows,shadows.blur,shapes.multipart,positioning}
-
 %%%%%%%%%%%%%%%
 % Intro slide %
 %%%%%%%%%%%%%%%
@@ -525,19 +526,17 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \section{Introduction}
 
-\begin{frame}
-  \frametitle{Preamble}
+\begin{frame}{Preamble}
   \begin{itemize} \setlength{\itemsep}{\fill}
   \item Feel free to \alert{interrupt} if you don't understand something
   \item Please ask. \alert{There are no stupid questions}!
-  \item The slides are available at \todo[inline]{add link}
+  \item The slides are available at\\ {\small\url{https://foivos.zakkak.net/uploads/git-beyond-the-basics.pdf}}
   \item %During the presentation I might try to amuse you with jokes.\\
     Apologies in advance if I \alert{inadvertently} offend you in any way
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Assumptions}
+\begin{frame}{Assumptions}
   \alert{You} know how to:
   \begin{enumerate}
   \item create a new repository \hfill \code{git init}
@@ -545,14 +544,14 @@ SmallCapsFeatures={Letters=SmallCaps},
   \item pull \hfill \code{git pull}
   \item commit \hfill \code{git add <file>; git commit}
   \item push \hfill \code{git push}
+  \item use branches \hfill \code{git branch mybranch; git checkout mybranch}
   \end{enumerate}
 \end{frame}
 
-\begin{frame}
-  \frametitle{What Is This Tutorial About?}
+\begin{frame}{What Is This Tutorial About?}
   \begin{itemize} \setlength{\itemsep}{\fill}
   \item \buz{Time traveling}{visiting older states, undoing mistakes}
-  \item \buz{Blaming others}{detecting commits that introduced bugs}
+  \item \buz{``Blaming'' others}{detecting commits that introduced bugs}
   \item \buz{Gardening}{working with multiple branches}
   \item \buz{Cleaning after yourself}{rebasing, squash, fixup, editing logs}
   \item \buz{Interacting with people}{working with others}
@@ -562,94 +561,331 @@ SmallCapsFeatures={Letters=SmallCaps},
   \alert{Best practices} in general!
 \end{frame}
 
+\begin{frame}{Git Terminology \& Background}
+  \centering
+  \tiny
+  Visualization inspired by Patrick Zahnd's ``\textit{git data transport commands}''. (\url{http://www.patrickzahnd.ch})
+  \vfill
+  \scriptsize
+  \input{tikz/transport-commands}
+\end{frame}
+
+\begin{frame}{Git log Visualization}
+  \centering
+  \input{tikz/git-log}
+\end{frame}
+
 \section{Time travel}
 
-\begin{frame}
-  \frametitle{Checkout}
+% \begin{frame}
+%   \frametitle{Checkout: Changing working branch}
+
+%   \code{git checkout <branch>}
+%   \begin{itemize}
+%   \item Brings the state of branch \texttt{<branch>} in the workspace
+%   \item Keeps any changes if there are no conflicts, fails otherwise
+%   \item Resets index
+%   \item Points \texttt{HEAD} to branch \texttt{<branch>}
+%   \end{itemize}
+
+% \end{frame}
+
+\begin{frame}{Checkout: Jump to a certain point in time (commit)}
+
+  \code{git checkout <commit>}
+  \begin{itemize}
+  \item Brings the state of \texttt{<commit>} in the workspace
+  \item Keeps any changes if there are no conflicts, fails otherwise
+  \item Resets index
+  \item Detaches \texttt{HEAD}
+  \end{itemize}
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Reset}
+\begin{frame}{Checkout: Undo changes in specific file(s)}
 
+  \code{git checkout -- <path(s)>}
+  \begin{itemize}
+  \item Get (overwrite) \texttt{<path(s)>} from \alert{index}
+  \item If path has been \alert{staged} it will revert to the \alert{staged state}
+  \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Reverting}
+\begin{frame}{Checkout: Obtain specific version of specific file(s)}
 
+  \code{git checkout <branch/commit> -- <path(s)>}
+  \begin{itemize}
+  \item Get (overwrite) \texttt{<path(s)>} from \texttt{<branch/commit>}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Reset: Undo staging}
+
+  \code{git reset}
+  \begin{itemize}
+  \item Resets the staging area (not altering the files in the workspace)
+  \end{itemize}
+
+  \vfill
+  \pause
+
+  \code{git reset -- <path(s)>}
+  \begin{itemize}
+  \item Only affect \texttt{<path(s)>}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Reset: Move \texttt{HEAD} to another branch/commit}
+
+  \code{git reset <branch/commit>}
+  \begin{itemize}
+  \item Point \texttt{HEAD} to \texttt{<branch/commit>}
+    \setbeamertemplate{description item}[align left]
+    \begin{description}[<+->] \setlength{\itemsep}{\fill}
+    \item[\texttt{--mixed}] (\alert{the default}) change the
+      \texttt{HEAD} and reset \alert{staging area}
+    \item[\texttt{--soft}] only change the \texttt{HEAD}\\
+      (Undo last commits without losing changes)
+    \item[\texttt{--hard}] change the \texttt{HEAD}, reset \alert{staging area and workspace}\\
+      (Throw away last commits)
+    \item[\texttt{--merge}] See \texttt{man git reset}
+    \item[\texttt{--keep}] See \texttt{man git reset}
+      % Change \texttt{HEAD} and reset index keeping changed files in workspace not altered by the commits being reset (fails on conflict)
+    \end{description}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Undo changes old changes}
+  \code{git revert <commit>}
+
+  Creates a new commit that reverts the changes made by \texttt{<commit>}
+
+  \vfill
+  \pause
+
+  \code{git revert <commit1>..<commit2>}
+
+  Creates a new commit that reverts the changes made by all commits in the range (inclusive) \texttt{<commit1>} to \texttt{<commit2>}
+
+  \vfill
+  \pause
+
+  \code{git revert -n <commit1>..<commit2>}
+
+  Reverts the changes made by all commits in the range (inclusive) \texttt{<commit1>} to \texttt{<commit2>} but does not commit them
 \end{frame}
 
 \section{Blaming others}
 
-\begin{frame}
-  \frametitle{Bisecting}
+\begin{frame}{Debugging or Bisecting}
+
+  \code{git bisect start}
+
+  Enter the bisecting mode
+
+  \vfill
+  \pause
+
+  \code{git bisect good/bad}
+
+  Mark current commit as good or bad
+
+  \vfill
+  \pause
+
+  \code{git bisect good/bad <commit>}
+
+  Mark \texttt{<commit>} as good or bad
+
+  \vfill
+  \pause
+
+  \code{git bisect log}
+
+  Show tested commits and their status.
+  This log can be saved and used to \textit{replay} part of the process.
+  \code{git bisect replay <logfile>}
 
 \end{frame}
 
 \section{Gardening}
 
-\begin{frame}
-  \frametitle{Branching}
+\begin{frame}{Branching}
+
+  \code{git branch -a}
+
+  List all branches, local and remote-tracking
+
+  \vfill
+  \pause
+
+  \code{git checkout -b <newbranch>}
+
+  Fastest way to create and checkout a new branch
+
+  \vfill
+  \pause
+
+  \code{git branch -d <branchname>}
+
+  Delete \texttt{<branchname>} locally
+
+  \vfill
+  \pause
+
+  \code{git branch -m <newname>} or \code{git branch -m <oldname> <newname>}
+
+  Rename current branch or given branch
+
+  \vfill
+  \pause
+
+  \code{git branch -u <remote> <remotebranchname>}
+
+  Set the remote branch to be used as upstream for current branch
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Merging}
+\begin{frame}{Merging}
+  \code{git merge <branch>}
+
+  Merge \texttt{<branch>} with current branch
+  \setbeamertemplate{description item}[align left]
+  \begin{description}[<+->] \setlength{\itemsep}{\fill}
+  \item[\texttt{--ff~~~~~}] (the \alert{default}) if merging can be resolved as an append doesn't create a \textit{merge commit}
+  \item[\texttt{--ff-only}] if merging cannot be resolved as an append it fails
+  \item[\texttt{--squash~}] squash all changes and stage them but do not commit
+  \end{description}
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Rebasing}
+\begin{frame}{Rebasing}
+  \code{git rebase <branch>}
 
+  \textit{Replay} current branch's commits on top of \texttt{<branch>}
+
+  \vfill
+  \pause
+
+  \begin{alertblock}{Caution}
+    Re-writes the history of your branch, changing the commit hashes
+  \end{alertblock}
 \end{frame}
 
 \section{Cleaning after yourself}
 
-\begin{frame}
-  \frametitle{Interactive rebasing}
-  \begin{itemize}
-  \item squash
-  \item reorder
-  \item edit commit message
-  \end{itemize}
+\begin{frame}{Re-writing history}
+  \code{git rebase -i <commit>}
+
+  Opens a file with all commits from \texttt{HEAD} to \texttt{<commit>} (inclusive) and allows us to:
+  \begin{center}
+    \def\arraystretch{1.5}
+    \setlength\tabcolsep{2em}
+    \begin{tabular}{c c c}
+      drop   & reorder & edit commit \\
+      squash & fixup   & edit commit message
+    \end{tabular}
+  \end{center}
+
+  \begin{alertblock}{Caution}
+    Re-writes the history of your branch, changing the commit hashes
+  \end{alertblock}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Fixup}
+\begin{frame}{Fixup and Squash commits}
+    \code{git commit --fixup/--squash <commit>}
 
+    Mark commit as a fixup or squash of \texttt{<commit>}.
+    Commit message will automatically be set.
+
+    \vfill
+    \pause
+
+    \code{git rebase -i --autosquash}
+
+    Automatically squash commits starting with \texttt{fixup!} or \texttt{squash!}
 \end{frame}
 
 \section{Interacting with people}
 
-\begin{frame}
-  \frametitle{Rules for successfull collaboration}
-
+\begin{frame}{Rules for successfull collaboration}
+  \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
+  \item Use \alert{descriptive yet short} commit subjects
+  \item \alert{Never} rewrite history of shared branches
+  \item \alert{Merge} often
+  \item \alert{Do not} commit changes that brake the previous state
+  \item Keep commits \alert{self contained} and as small as possible
+  \end{itemize}
 \end{frame}
 
 \section{Being social}
 
-\begin{frame}
-  \frametitle{Managing multiple remotes}
+\begin{frame}{Managing multiple remotes}
+  \code{git remote add <remotename> <url>}
+
+  Adds a new remote
+
+  \vfill
+  \pause
+
+  \code{git push <remotename>}
+
+  Pushes to \texttt{<remotename>} instead of \texttt{origin}
+
+  \vfill
+  \pause
+
+  \code{git pull <remotename>}
+
+  Pulls from \texttt{<remotename>} instead of \texttt{origin}
+
+  \vfill
+  \pause
+
+  \code{git fetch <remotename>}
+
+  Fetches from \texttt{<remotename>} instead of \texttt{origin}
 
 \end{frame}
 
-\section{Acknowledgments}
+\begin{frame}{Managing multiple remotes}
+  \code{git checkout <remotename>/<branch>}
 
-\begin{frame}
-  \frametitle{Acknowledgments}
+  Checks out \texttt{<branch>} from \texttt{<remotename>} instead of the local repository.
+  It still \alert{doesn't fetch it} though!
+
+  \vfill
+  \pause
+
+  \code{git fetch --all}
+
+  Fetches all remotes
+
+  \vfill
+  \pause
+
+  \code{git fetch --all --prune}
+
+  Removes any no longer existing remote branches
 
 \end{frame}
+
+% \section{Acknowledgments}
+
+% \begin{frame}{Acknowledgments}
+
+% \end{frame}
 
 % Closing slide
-% \subsection{Closure}
-% % {
-% % \setbeamertemplate{footline}{}
-% % \begin{frame}[noframenumbering]
-% %  \frametitle{\fontspec{Purisa}\textbf{Thank You!}}
-% %  \centering
-% %  \titlepage
-% % \end{frame}
-% % }
+\section{Closure}
+{
+\setbeamertemplate{footline}{}
+\begin{frame}[noframenumbering]
+ \frametitle{\fontspec{Purisa}\textbf{Cheers!}}
+ \centering
+ \titlepage
+\end{frame}
+}
 
 %   BACKUP SLIDES
 
