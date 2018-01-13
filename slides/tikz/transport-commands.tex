@@ -27,7 +27,7 @@
   \draw [visible on=<5->, workspace, arrow] ([yshift=-4mm]workspace.south) to node {\texttt{git stash}} ([yshift=-4mm]stash.south);
 
   % Undo
-  \draw [visible on=<2->, index, arrow] ([yshift=-4mm]index.south) to node {\texttt{git checkout}} ([yshift=-4mm]workspace.south);
+  \draw [visible on=<2->, index, arrow] ([yshift=-4mm]index.south) to node {\texttt{git checkout -- ...}} ([yshift=-4mm]workspace.south);
   \draw [visible on=<3->, local, arrow] ([yshift=-4mm]local.south) to node {\texttt{git reset --soft}} ([yshift=-4mm]index.south);
   \draw [visible on=<3->, local, arrow] ([yshift=-10mm]local.south) to node {\texttt{git checkout HEAD}} ([yshift=-10mm]workspace.south);
 
