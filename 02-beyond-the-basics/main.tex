@@ -571,12 +571,12 @@ SmallCapsFeatures={Letters=SmallCaps},
   \input{tikz/transport-commands}
 \end{frame}
 
-\begin{frame}{Git log Visualization}
+\begin{frame}{Git Log Visualization}
   \centering
   \input{tikz/git-log}
 \end{frame}
 
-\section{Time travel}
+\section{Time Travel}
 
 % \begin{frame}
 %   \frametitle{Checkout: Changing working branch}
@@ -591,7 +591,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 % \end{frame}
 
-\begin{frame}{Checkout: Jump to a certain point in time (commit)}
+\begin{frame}{Checkout: Jump to a Certain Point in Time (Commit)}
 
   \code{git checkout <commit>}
   \begin{itemize}
@@ -603,7 +603,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \end{frame}
 
-\begin{frame}{Checkout: Undo changes in specific file(s)}
+\begin{frame}{Checkout: Undo Changes in Specific File(s)}
 
   \code{git checkout -- <path(s)>}
   \begin{itemize}
@@ -612,7 +612,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Checkout: Obtain specific version of specific file(s)}
+\begin{frame}{Checkout: Obtain Specific Version of Specific File(s)}
 
   \code{git checkout <branch/commit> -- <path(s)>}
   \begin{itemize}
@@ -620,7 +620,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Reset: Undo staging}
+\begin{frame}{Reset: Undo Staging}
 
   \code{git reset}
   \begin{itemize}
@@ -636,7 +636,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Reset: Move \texttt{HEAD} to another branch/commit}
+\begin{frame}{Reset: Move \texttt{HEAD} to Another Branch/Commit}
 
   \code{git reset <branch/commit>}
   \begin{itemize}
@@ -656,7 +656,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Undo changes old changes}
+\begin{frame}{Undo Changes}
   \code{git revert <commit>}
 
   Creates a new commit that reverts the changes made by \texttt{<commit>}
@@ -676,7 +676,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   Reverts the changes made by all commits in the range (inclusive) \texttt{<commit1>} to \texttt{<commit2>} but does not commit them
 \end{frame}
 
-\section{Blaming others}
+\section{Blaming Others}
 
 \begin{frame}{Debugging or Bisecting}
 
@@ -773,9 +773,9 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{alertblock}
 \end{frame}
 
-\section{Cleaning after yourself}
+\section{Cleaning After Yourself}
 
-\begin{frame}{Re-writing history}
+\begin{frame}{Re-writing History}
   \code{git rebase -i <commit>}
 
   Opens a file with all commits from \texttt{HEAD} to \texttt{<commit>} (inclusive) and allows us to:
@@ -793,7 +793,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{alertblock}
 \end{frame}
 
-\begin{frame}{Fixup and Squash commits}
+\begin{frame}{Fixup and Squash Commits}
     \code{git commit --fixup/--squash <commit>}
 
     Mark commit as a fixup or squash of \texttt{<commit>}.
@@ -809,7 +809,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \section{Sharing}
 
-\begin{frame}{Managing multiple remotes}
+\begin{frame}{Managing Multiple Remotes}
   \code{git remote add <remotename> <url>}
 
   Adds a new remote
@@ -837,7 +837,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \end{frame}
 
-\begin{frame}{Managing multiple remotes}
+\begin{frame}{Managing Multiple Remotes}
   \code{git checkout <remotename>/<branch>}
 
   Checks out \texttt{<branch>} from \texttt{<remotename>} instead of the local repository.
@@ -859,9 +859,9 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \end{frame}
 
-\section{Interacting with people}
+\section{Interacting with People}
 
-\begin{frame}{Rules for successfull collaboration}
+\begin{frame}{Rules for Successful Collaboration}
   \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
   \item Use \alert{descriptive yet short} commit subjects
   \item \alert{Never} rewrite history of shared branches
@@ -873,7 +873,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \section{Befriending Giants}
 
-\begin{frame}{Working with huge projects}
+\begin{frame}{Working with Huge Projects}
   \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
   \item Consider the \alert{gating/regression costs} before pushing
   \item ``I'll fix it later'' hacks are not going to be fixed any time soon\\[1ex]
