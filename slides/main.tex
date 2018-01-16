@@ -554,8 +554,9 @@ SmallCapsFeatures={Letters=SmallCaps},
   \item \buz{``Blaming'' others}{detecting commits that introduced bugs}
   \item \buz{Gardening}{working with multiple branches}
   \item \buz{Cleaning after yourself}{rebasing, squash, fixup, editing logs}
+  \item \buz{Sharing}{working with multiple remotes}
   \item \buz{Interacting with people}{working with others}
-  \item \buz{Being social}{working with multiple remotes}
+  \item \buz{Befriending giants}{working with huge projects}
   \end{itemize}
   \centering
   \alert{Best practices} in general!
@@ -806,19 +807,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     Automatically squash commits starting with \texttt{fixup!} or \texttt{squash!}
 \end{frame}
 
-\section{Interacting with people}
-
-\begin{frame}{Rules for successfull collaboration}
-  \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
-  \item Use \alert{descriptive yet short} commit subjects
-  \item \alert{Never} rewrite history of shared branches
-  \item \alert{Merge} often
-  \item \alert{Do not} commit changes that brake the previous state
-  \item Keep commits \alert{self contained} and as small as possible
-  \end{itemize}
-\end{frame}
-
-\section{Being social}
+\section{Sharing}
 
 \begin{frame}{Managing multiple remotes}
   \code{git remote add <remotename> <url>}
@@ -868,6 +857,30 @@ SmallCapsFeatures={Letters=SmallCaps},
 
   Removes any no longer existing remote branches
 
+\end{frame}
+
+\section{Interacting with people}
+
+\begin{frame}{Rules for successfull collaboration}
+  \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
+  \item Use \alert{descriptive yet short} commit subjects
+  \item \alert{Never} rewrite history of shared branches
+  \item \alert{Merge} often
+  \item \alert{Do not} commit changes that brake the previous state
+  \item Keep commits \alert{self contained} and as small as possible
+  \end{itemize}
+\end{frame}
+
+\section{Befriending Giants}
+
+\begin{frame}{Working with huge projects}
+  \begin{itemize}[<+->] \setlength{\itemsep}{\fill}
+  \item Consider the \alert{gating/regression costs} before pushing
+  \item ``I'll fix it later'' hacks are not going to be fixed any time soon\\[1ex]
+    Oldest \alert{fix later} linux kernel hack dates back to \alert{1996} \url{http://kazet.co/2016/04/29/temporary-hacks.html}
+  \item \code{git log --simplify-merges}
+  \item Follow a strict branching model like \alert{Git-Flow}
+  \end{itemize}
 \end{frame}
 
 % \section{Acknowledgments}
