@@ -29,6 +29,9 @@ x11names]{beamer}
 \setlength{\TPVertModule}{\paperheight}
 \textblockorigin{0mm}{0mm}
 
+% Add shadows to figures
+\usepackage[many]{tcolorbox}
+
 \newcommand{\src}[1]{\scriptsize Figure Source: \textit{#1}}
 
 \defbeamertemplate{description item}{align left}{\insertdescriptionitem\hfill}
@@ -438,6 +441,20 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \newcommand{\buz}[2]{#1 \hfill \textcolor{Gray!50}{#2}}
 
+\newcommand{\shadowbox}[2]{%
+  \hbox{%
+    \begin{tcolorbox}[beamer,
+      width=#1,
+      drop fuzzy shadow=black,
+      arc=0pt,
+      boxsep=0pt,
+      left=0pt,right=0pt,top=0pt,bottom=0pt,
+      ]%
+      #2
+    \end{tcolorbox}
+  }
+}
+
 % \usepackage{verbatim}
 \usepackage{listings}
 
@@ -577,7 +594,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.35\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.9\textwidth]{main-branches}
+      \shadowbox{.9\textwidth}{\includegraphics[width=\linewidth]{main-branches}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -607,7 +624,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.35\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.48\textwidth]{feature-branch}
+      \shadowbox{.48\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -632,7 +649,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.38\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.7\textwidth,clip,trim=5.5cm 5cm 0 0]{release-branches}
+      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -657,7 +674,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.35\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.8\textwidth]{hotfix-branches}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -665,7 +682,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 \begin{frame}[plain]
   \centering
   \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-  \includegraphics[width=.48\textwidth]{git-model}
+  \shadowbox{.48\textwidth}{\includegraphics[width=\linewidth]{git-model}}
 \end{frame}
 
 \section{The git flow extension}
@@ -705,7 +722,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.3\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.55\textwidth]{feature-branch}
+      \shadowbox{.55\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -726,7 +743,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.38\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.7\textwidth,clip,trim=5.5cm 5cm 0 0]{release-branches}
+      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -747,7 +764,7 @@ SmallCapsFeatures={Letters=SmallCaps},
     \begin{column}{.35\linewidth}
       \centering
       \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \includegraphics[width=.8\textwidth]{hotfix-branches}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
     \end{column}
   \end{columns}
 \end{frame}
