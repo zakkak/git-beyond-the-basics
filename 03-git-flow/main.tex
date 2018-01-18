@@ -774,6 +774,20 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{columns}
 \end{frame}
 
+\section{git flow with github reviews}
+
+\begin{frame}{What about code reviews?}
+  \begin{enumerate} \setlength{\itemsep}{\fill}
+  \item \code{git flow feature/release/hotfix start <name>}
+  \item Edit and \code{git commit}
+  \item \code{git flow feature/release/hotfix publish <name>}
+  \item Open Pull/Merge Request on github/gitlab
+  \item When the Pull/Merge Request gets approved
+  \item \code{git flow feature/release/hotfix finish <name>}
+  \item \code{git push --tags} (for release and hotfix)
+  \end{enumerate}
+\end{frame}
+
 \section{Acknowledgments}
 
 \begin{frame}{Acknowledgments}
