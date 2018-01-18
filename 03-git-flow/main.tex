@@ -714,9 +714,13 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git flow feature start mynewfeature}
       \item Code and \code{git commit}
       \item \code{git flow feature finish  mynewfeature}
+      \end{enumerate}
+      \vfill
+      Shared feature branches:
+      \begin{itemize} \setlength{\itemsep}{\fill}
       \item \code{git flow feature publish coopfeature}
       \item \code{git flow feature pull origin coopfeature}
-      \end{enumerate}
+      \end{itemize}
       \endminipage
     \end{column}
     \begin{column}{.3\linewidth}
@@ -735,6 +739,7 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git flow release start 2.1.0}
       \item Bump version to 2.1.0 and \code{git commit}
       \item \code{git flow release publish 2.1.0}
+      \item Fix bugs (only) and \code{git commit}
       \item \code{git flow release finish 2.1.0}
       \item \code{git push --tags}
       \end{enumerate}
