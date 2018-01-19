@@ -430,7 +430,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 % \graphicspath{{figures/}}
 % \newcommand{\longname}{\emph{Source-Level Compiler Optimizations for Task-Parallelism}}
-\newcommand{\code}[1]{{\small\colorbox{black}{\textcolor{green}{\texttt{#1}}}}}
+\newcommand{\code}[1]{{\small\setlength{\fboxsep}{2pt}\colorbox{black}{\textcolor{green}{\texttt{#1}}}}}
 
 \usepackage{bbding} % for the Checkmark and XSolidBrush
 \newcommand{\tik}[0]{{\color{green}\Checkmark}} % Check-mark
@@ -471,7 +471,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 \usepackage{multirow}
 
 % Print table of contects at the beggining of each section
-% \AtBeginSection[]{\begin{frame}\frametitle{Table of Contents}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+\AtBeginSection[]{\begin{frame}\frametitle{Table of Contents}\tableofcontents[currentsection,currentsubsection]\end{frame}}
 % \AtBeginSubsection[]{\begin{frame}\frametitle{Table of Contents}\tableofcontents[currentsection,currentsubsection]\end{frame}}
 
 % Add outlines
@@ -524,7 +524,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 %     \tableofcontents
 % \end{frame}
 
-\section{Introduction}
+% \section{Introduction}
 
 \begin{frame}{Preamble}
   \begin{itemize} \setlength{\itemsep}{\fill}
@@ -579,32 +579,22 @@ SmallCapsFeatures={Letters=SmallCaps},
 \section{Time Travel}
 
 % \begin{frame}
-%   \frametitle{Checkout: Changing working branch}
-
-%   \code{git checkout <branch>}
-%   \begin{itemize}
-%   \item Brings the state of branch \texttt{<branch>} in the workspace
-%   \item Keeps any changes if there are no conflicts, fails otherwise
-%   \item Resets index
-%   \item Points \texttt{HEAD} to branch \texttt{<branch>}
-%   \end{itemize}
-
+%   \centering
+%   \Large
+%   Time Travel
 % \end{frame}
 
-\begin{frame}{Checkout: Jump to a Certain Point in Time (Commit)}
-
-  \code{git checkout <commit>}
+\begin{frame}{Jump to a Certain Point in Time (Commit)}
+  \code{git checkout <branch/commit>}
   \begin{itemize}
-  \item Brings the state of \texttt{<commit>} in the workspace
+  \item Brings the state of \texttt{<branch/commit>} in the workspace
   \item Keeps any changes if there are no conflicts, fails otherwise
   \item Resets index
-  \item Detaches \texttt{HEAD}
+  \item Might detach \texttt{HEAD}
   \end{itemize}
-
 \end{frame}
 
-\begin{frame}{Checkout: Undo Changes in Specific File(s)}
-
+\begin{frame}{Undo Changes in Specific File(s)}
   \code{git checkout -- <path(s)>}
   \begin{itemize}
   \item Get (overwrite) \texttt{<path(s)>} from \alert{index}
@@ -612,21 +602,20 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Checkout: Obtain Specific Version of Specific File(s)}
-
+\begin{frame}{Obtain Specific Version of Specific File(s)}
   \code{git checkout <branch/commit> -- <path(s)>}
   \begin{itemize}
   \item Get (overwrite) \texttt{<path(s)>} from \texttt{<branch/commit>}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Reset: Undo Staging}
+\begin{frame}{Undo Staging}
 
   \code{git reset}
   \begin{itemize}
-  \item Resets the staging area (not altering the files in the workspace)
+  \item Resets the staging area (not altering the files in the
+    workspace)
   \end{itemize}
-
   \vfill
   \pause
 
@@ -636,7 +625,7 @@ SmallCapsFeatures={Letters=SmallCaps},
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Reset: Move \texttt{HEAD} to Another Branch/Commit}
+\begin{frame}{Move \texttt{HEAD} of Current Branch to Another Branch/Commit}
 
   \code{git reset <branch/commit>}
   \begin{itemize}
@@ -658,55 +647,78 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \begin{frame}{Undo Changes}
   \code{git revert <commit>}
-
-  Creates a new commit that reverts the changes made by \texttt{<commit>}
+  \begin{itemize}
+  \item Creates a new commit that reverts the changes made by
+    \texttt{<commit>}
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git revert <commit1>..<commit2>}
-
-  Creates a new commit that reverts the changes made by all commits in the range (inclusive) \texttt{<commit1>} to \texttt{<commit2>}
+  \begin{itemize}
+  \item Creates a new commit that reverts the changes made by all
+    commits in the range (inclusive) \texttt{<commit1>} to
+    \texttt{<commit2>}
+  \end{itemize}
 
   \vfill
   \pause
 
-  \code{git revert -n <commit1>..<commit2>}
-
-  Reverts the changes made by all commits in the range (inclusive) \texttt{<commit1>} to \texttt{<commit2>} but does not commit them
+  \code{git revert -n ...}
+  \begin{itemize}
+  \item Reverts the changes but does not commit them
+  \end{itemize}
 \end{frame}
 
 \section{Blaming Others}
 
+\begin{frame}{Blame}
+  \code{git blame}
+  \begin{itemize}
+  \item Annotates each line with the last commit that altered it
+  \end{itemize}
+
+  \vfill
+  \pause
+
+  \code{git blame -w}
+  \begin{itemize}
+  \item Ignores whitespace edits
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Debugging or Bisecting}
-
   \code{git bisect start}
-
-  Enter the bisecting mode
+  \begin{itemize}
+  \item Enter the bisecting mode
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git bisect good/bad}
-
-  Mark current commit as good or bad
+  \begin{itemize}
+  \item Mark current commit as good or bad
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git bisect good/bad <commit>}
-
-  Mark \texttt{<commit>} as good or bad
+  \begin{itemize}
+  \item Mark \texttt{<commit>} as good or bad
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git bisect log}
-
-  Show tested commits and their status.
-  This log can be saved and used to \textit{replay} part of the process.
-  \code{git bisect replay <logfile>}
-
+  \begin{itemize}
+  \item Show tested commits and their status.
+  \item This log can be saved and used to \textit{replay} part of the process.
+    \code{git bisect replay <logfile>}
+  \end{itemize}
 \end{frame}
 
 \section{Gardening}
@@ -714,59 +726,63 @@ SmallCapsFeatures={Letters=SmallCaps},
 \begin{frame}{Branching}
 
   \code{git branch -a}
-
-  List all branches, local and remote-tracking
+  \begin{itemize}
+  \item List all branches, local and remote-tracking
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git checkout -b <newbranch>}
-
-  Fastest way to create and checkout a new branch
+  \begin{itemize}
+  \item Fastest way to create and checkout a new branch
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git branch -d <branchname>}
-
-  Delete \texttt{<branchname>} locally
+  \begin{itemize}
+  \item Delete \texttt{<branchname>} locally
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git branch -m <newname>} or \code{git branch -m <oldname> <newname>}
-
-  Rename current branch or given branch
+  \begin{itemize}
+  \item Rename current branch or given branch
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git branch -u <remote> <remotebranchname>}
-
-  Set the remote branch to be used as upstream for current branch
-
+  \begin{itemize}
+  \item Set the remote branch to be used as upstream for current branch
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Merging}
   \code{git merge <branch>}
-
-  Merge \texttt{<branch>} with current branch
-  \setbeamertemplate{description item}[align left]
-  \begin{description}[<+->] \setlength{\itemsep}{\fill}
-  \item[\texttt{--ff~~~~~}] (the \alert{default}) if merging can be resolved as an append doesn't create a \textit{merge commit}
-  \item[\texttt{--ff-only}] if merging cannot be resolved as an append it fails
-  \item[\texttt{--squash~}] squash all changes and stage them but do not commit
-  \end{description}
-
+  \begin{itemize}
+  \item Merge \texttt{<branch>} with current branch
+    \setbeamertemplate{description item}[align left]
+    \begin{description}[<+->] \setlength{\itemsep}{\fill}
+    \item[\texttt{--ff~~~~~}] (the \alert{default}) if merging can be resolved as an append doesn't create a \textit{merge commit}
+    \item[\texttt{--ff-only}] if merging cannot be resolved as an append it fails
+    \item[\texttt{--no-ff~~}] merge and create a \textit{merge commit}
+    \item[\texttt{--squash~}] squash all changes and stage them but do not commit
+    \end{description}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Rebasing}
   \code{git rebase <branch>}
-
-  \textit{Replay} current branch's commits on top of \texttt{<branch>}
-
-  \vfill
-  \pause
+  \begin{itemize}
+  \item \textit{Replay} current branch's commits on top of
+    \texttt{<branch>}
+  \end{itemize}
 
   \begin{alertblock}{Caution}
     Re-writes the history of your branch, changing the commit hashes
@@ -778,15 +794,18 @@ SmallCapsFeatures={Letters=SmallCaps},
 \begin{frame}{Re-writing History}
   \code{git rebase -i <commit>}
 
-  Opens a file with all commits from \texttt{HEAD} to \texttt{<commit>} (inclusive) and allows us to:
-  \begin{center}
-    \def\arraystretch{1.5}
-    \setlength\tabcolsep{2em}
-    \begin{tabular}{c c c}
-      drop   & reorder & edit commit \\
-      squash & fixup   & edit commit message
-    \end{tabular}
-  \end{center}
+  \begin{itemize}
+  \item Opens a file with all commits from \texttt{HEAD} to
+    \texttt{<commit>} (inclusive) and allows us to:
+    \begin{center}
+      \def\arraystretch{1.5}
+      \setlength\tabcolsep{2em}
+      \begin{tabular}{c c c}
+        drop   & reorder & edit commit \\
+        squash & fixup   & edit commit message
+      \end{tabular}
+    \end{center}
+  \end{itemize}
 
   \begin{alertblock}{Caution}
     Re-writes the history of your branch, changing the commit hashes
@@ -795,68 +814,63 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \begin{frame}{Fixup and Squash Commits}
     \code{git commit --fixup/--squash <commit>}
-
-    Mark commit as a fixup or squash of \texttt{<commit>}.
-    Commit message will automatically be set.
+    \begin{itemize}
+    \item Mark commit as a fixup or squash of \texttt{<commit>}.
+    \item Commit message will automatically be set.
+    \end{itemize}
 
     \vfill
     \pause
 
     \code{git rebase -i --autosquash}
-
-    Automatically squash commits starting with \texttt{fixup!} or \texttt{squash!}
+    \begin{itemize}
+    \item Automatically squash commits starting with \texttt{fixup!} or
+      \texttt{squash!}
+    \end{itemize}
 \end{frame}
 
 \section{Sharing}
 
 \begin{frame}{Managing Multiple Remotes}
   \code{git remote add <remotename> <url>}
-
-  Adds a new remote
-
-  \vfill
-  \pause
-
-  \code{git push <remotename>}
-
-  Pushes to \texttt{<remotename>} instead of \texttt{origin}
+  \begin{itemize}
+  \item Adds a new remote
+  \end{itemize}
 
   \vfill
   \pause
 
-  \code{git pull <remotename>}
-
-  Pulls from \texttt{<remotename>} instead of \texttt{origin}
+  \code{git push/pull/fetch <remotename>}
+  \begin{itemize}
+  \item Pushes/Pulls/Fetches to \texttt{<remotename>} instead of
+    \texttt{origin}
+  \end{itemize}
 
   \vfill
   \pause
 
-  \code{git fetch <remotename>}
+  \code{git checkout/merge <remotename>/<branch>}
 
-  Fetches from \texttt{<remotename>} instead of \texttt{origin}
-
+  \begin{itemize}
+  \item Checks out/Merges \texttt{<branch>} from \texttt{<remotename>}
+    instead of the local \texttt{<branch>}.
+  \item It still \alert{doesn't fetch it} though!
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Managing Multiple Remotes}
-  \code{git checkout <remotename>/<branch>}
-
-  Checks out \texttt{<branch>} from \texttt{<remotename>} instead of the local repository.
-  It still \alert{doesn't fetch it} though!
-
-  \vfill
-  \pause
-
   \code{git fetch --all}
-
-  Fetches all remotes
+  \begin{itemize}
+  \item Fetches all remotes
+  \end{itemize}
 
   \vfill
   \pause
 
   \code{git fetch --all --prune}
-
-  Removes any no longer existing remote branches
-
+  \begin{itemize}
+  \item Removes any no longer existing remote branches
+  \end{itemize}
 \end{frame}
 
 \section{Interacting with People}
@@ -868,6 +882,22 @@ SmallCapsFeatures={Letters=SmallCaps},
   \item \alert{Merge} often
   \item \alert{Do not} commit changes that break the previous state
   \item Keep commits \alert{self contained} and as small as possible
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bonus}
+  \code{git add -p}
+  \begin{itemize}
+  \item Interactive staging allowing to only stage parts of a diff
+    (hunks)
+  \end{itemize}
+
+  \vfill
+  \pause
+
+  \code{git cherry-pick}
+  \begin{itemize}
+  \item Cherry-pick a single commit from another branch
   \end{itemize}
 \end{frame}
 
@@ -905,7 +935,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 % \end{frame}
 
 % Closing slide
-\section{Closure}
+% \section{Closure}
 {
 \setbeamertemplate{footline}{}
 \begin{frame}[noframenumbering]
