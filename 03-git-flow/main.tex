@@ -433,7 +433,7 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \graphicspath{{figures/}}
 % \newcommand{\longname}{\emph{Source-Level Compiler Optimizations for Task-Parallelism}}
-\newcommand{\code}[1]{{\small\colorbox{black}{\textcolor{green}{\texttt{#1}}}}}
+\newcommand{\code}[1]{{\small\setlength{\fboxsep}{2pt}\colorbox{black}{\textcolor{green}{\texttt{#1}}}}}
 
 \usepackage{bbding} % for the Checkmark and XSolidBrush
 \newcommand{\tik}[0]{{\color{green}\Checkmark}} % Check-mark
@@ -609,10 +609,16 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \begin{frame}{Feature Branches}
   \begin{columns}
-    \begin{column}{.65\linewidth}
+    \begin{column}{.25\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
+    \end{column}
+    \pause
+    \begin{column}{.75\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
-      \begin{enumerate} \setlength{\itemsep}{\fill}
-      \item \code{git checkout -b feature/mynewfeature}
+      \begin{enumerate}[<+->] \setlength{\itemsep}{\fill}
+      \item \code{git checkout develop -b feature/mynewfeature}
       \item Code and \code{git commit}
       \item \code{git checkout develop}
       \item \code{git merge --no-ff feature/mynewfeature}
@@ -621,20 +627,21 @@ SmallCapsFeatures={Letters=SmallCaps},
       \end{enumerate}
       \endminipage
     \end{column}
-    \begin{column}{.35\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.48\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
-    \end{column}
   \end{columns}
 \end{frame}
 
 \begin{frame}{Release Branches}
   \begin{columns}
-    \begin{column}{.62\linewidth}
+    \begin{column}{.35\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
+    \end{column}
+    \pause
+    \begin{column}{.65\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
-      \begin{enumerate} \setlength{\itemsep}{\fill}
-      \item \code{git checkout -b release/v2.1.0}
+      \begin{enumerate}[<+->] \setlength{\itemsep}{\fill}
+      \item \code{git checkout develop -b release/v2.1.0}
       \item Bump version to 2.1.0 and \code{git commit}
       \item \code{git checkout master}
       \item \code{git merge --no-ff release/v2.1.0}
@@ -646,20 +653,21 @@ SmallCapsFeatures={Letters=SmallCaps},
       \end{enumerate}
       \endminipage
     \end{column}
-    \begin{column}{.38\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
-    \end{column}
   \end{columns}
 \end{frame}
 
 \begin{frame}{Hotfix Branches}
   \begin{columns}
+    \begin{column}{.35\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
+    \end{column}
+    \pause
     \begin{column}{.65\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
-      \begin{enumerate} \setlength{\itemsep}{\fill}
-      \item \code{git checkout -b hotfix/v2.1.1}
+      \begin{enumerate}[<+->] \setlength{\itemsep}{\fill}
+      \item \code{git checkout master -b hotfix/v2.1.1}
       \item Bump version to 2.1.1 and \code{git commit}
       \item Apply hot fix and \code{git commit}
       \item \code{git checkout master}
@@ -670,11 +678,6 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git branch -d hotfix/v2.1.1}
       \end{enumerate}
       \endminipage
-    \end{column}
-    \begin{column}{.35\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -702,13 +705,19 @@ SmallCapsFeatures={Letters=SmallCaps},
 \end{frame}
 
 \begin{frame}[fragile]{Initialize}
-  \centering
-  \code{git flow init}
+  \begin{center}
+    \code{git flow init}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Feature Branches}
   \begin{columns}
-    \begin{column}{.7\linewidth}
+    \begin{column}{.25\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
+    \end{column}
+    \begin{column}{.75\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
       \begin{enumerate} \setlength{\itemsep}{\fill}
       \item \code{git flow feature start mynewfeature}
@@ -716,6 +725,7 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git flow feature finish  mynewfeature}
       \end{enumerate}
       \vfill
+      \pause
       Shared feature branches:
       \begin{itemize} \setlength{\itemsep}{\fill}
       \item \code{git flow feature publish coopfeature}
@@ -723,17 +733,17 @@ SmallCapsFeatures={Letters=SmallCaps},
       \end{itemize}
       \endminipage
     \end{column}
-    \begin{column}{.3\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.55\textwidth}{\includegraphics[width=\linewidth]{feature-branch}}
-    \end{column}
   \end{columns}
 \end{frame}
 
 \begin{frame}{Release Branches}
   \begin{columns}
-    \begin{column}{.62\linewidth}
+    \begin{column}{.35\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
+    \end{column}
+    \begin{column}{.65\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
       \begin{enumerate} \setlength{\itemsep}{\fill}
       \item \code{git flow release start 2.1.0}
@@ -745,16 +755,16 @@ SmallCapsFeatures={Letters=SmallCaps},
       \end{enumerate}
       \endminipage
     \end{column}
-    \begin{column}{.38\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.7\textwidth}{\includegraphics[width=\linewidth,clip,trim=5.5cm 5cm 0 0]{release-branches}}
-    \end{column}
   \end{columns}
 \end{frame}
 
 \begin{frame}{Hotfix Branches}
   \begin{columns}
+    \begin{column}{.35\linewidth}
+      \centering
+      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
+      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
+    \end{column}
     \begin{column}{.65\linewidth}
       \minipage[c][0.75\textheight][s]{\columnwidth}
       \begin{enumerate} \setlength{\itemsep}{\fill}
@@ -765,11 +775,6 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git push --tags}
       \end{enumerate}
       \endminipage
-    \end{column}
-    \begin{column}{.35\linewidth}
-      \centering
-      \rotatebox{90}{\tiny\textcopyright Vincent Driessen}
-      \shadowbox{.8\textwidth}{\includegraphics[width=\linewidth]{hotfix-branches}}
     \end{column}
   \end{columns}
 \end{frame}
