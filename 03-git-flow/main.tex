@@ -722,7 +722,7 @@ SmallCapsFeatures={Letters=SmallCaps},
       \begin{enumerate} \setlength{\itemsep}{\fill}
       \item \code{git flow feature start mynewfeature}
       \item Code and \code{git commit}
-      \item \code{git flow feature finish  mynewfeature}
+      \item \code{git flow feature finish --push}
       \end{enumerate}
       \vfill
       \pause
@@ -750,7 +750,7 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item Bump version to 2.1.0 and \code{git commit}
       \item \code{git flow release publish 2.1.0}
       \item Fix bugs (only) and \code{git commit}
-      \item \code{git flow release finish 2.1.0}
+      \item \code{git flow release finish 2.1.0 --push}
       \item \code{git push --tags}
       \end{enumerate}
       \endminipage
@@ -771,7 +771,7 @@ SmallCapsFeatures={Letters=SmallCaps},
       \item \code{git flow hotfix start 2.1.1}
       \item Bump version to 2.1.1 and \code{git commit}
       \item Apply hot fix and \code{git commit}
-      \item \code{git flow hotfix finish 2.1.1}
+      \item \code{git flow hotfix finish 2.1.1 --push}
       \item \code{git push --tags}
       \end{enumerate}
       \endminipage
@@ -783,14 +783,28 @@ SmallCapsFeatures={Letters=SmallCaps},
 
 \begin{frame}{What about code reviews?}
   \begin{enumerate} \setlength{\itemsep}{\fill}
-  \item \code{git flow feature/release/hotfix start <name>}
+  \item \code{git flow feature/release/hotfix start ID}
   \item Edit and \code{git commit}
-  \item \code{git flow feature/release/hotfix publish <name>}
+  \item \code{git flow feature/release/hotfix publish ID}
   \item Open Pull/Merge Request on github/gitlab
   \item When the Pull/Merge Request gets approved
-  \item \code{git flow feature/release/hotfix finish <name>}
+  \item \code{git flow feature/release/hotfix finish --keepremote --push ID}
   \item \code{git push --tags} (for release and hotfix)
+  \item Delete branch from github merged pull request
   \end{enumerate}
+\end{frame}
+
+\begin{frame}{Hint}
+  To avoid flags \code{--keepremote --push ID}:
+
+  \begin{itemize}
+  \item \code{git config gitflow.feature.finish.keepremote true}
+  \item \code{git config gitflow.feature.finish.push true}
+  \item \code{git config gitflow.hotfix.finish.keepremote true}
+  \item \code{git config gitflow.hotfix.finish.push true}
+  \item \code{git config gitflow.release.finish.keepremote true}
+  \item \code{git config gitflow.release.finish.push true}
+\end{itemize}
 \end{frame}
 
 \section{Acknowledgments}
